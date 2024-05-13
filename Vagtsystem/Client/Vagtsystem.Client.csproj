@@ -1,0 +1,281 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' ">
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' ">
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.5" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+    <PackageReference Include="Npgsql" Version="7.0.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Vagtsystem.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="obj\Debug\net7.0\Vagtsystem.Client.csproj.AssemblyReference.cache" />
+    <None Include="obj\Release\net7.0\build-gz\+2sIytZP.gz" />
+    <None Include="obj\Release\net7.0\build-gz\+5ydceui.gz" />
+    <None Include="obj\Release\net7.0\build-gz\+6LGvY2x.gz" />
+    <None Include="obj\Release\net7.0\build-gz\+dSOtP30.gz" />
+    <None Include="obj\Release\net7.0\build-gz\+M0Pf9f1.gz" />
+    <None Include="obj\Release\net7.0\build-gz\+mi1eyBZ.gz" />
+    <None Include="obj\Release\net7.0\build-gz\+pXaidJH.gz" />
+    <None Include="obj\Release\net7.0\build-gz\+TRfChNA.gz" />
+    <None Include="obj\Release\net7.0\build-gz\1+NYee8x.gz" />
+    <None Include="obj\Release\net7.0\build-gz\1iA9Sa8w.gz" />
+    <None Include="obj\Release\net7.0\build-gz\1nvLb6f0.gz" />
+    <None Include="obj\Release\net7.0\build-gz\1Sxyl4vD.gz" />
+    <None Include="obj\Release\net7.0\build-gz\1TSnjH51.gz" />
+    <None Include="obj\Release\net7.0\build-gz\22E8zoSk.gz" />
+    <None Include="obj\Release\net7.0\build-gz\2Epp0ngR.gz" />
+    <None Include="obj\Release\net7.0\build-gz\2PXNfyni.gz" />
+    <None Include="obj\Release\net7.0\build-gz\3aoXmLMO.gz" />
+    <None Include="obj\Release\net7.0\build-gz\3bQezFSt.gz" />
+    <None Include="obj\Release\net7.0\build-gz\3uEIm2fb.gz" />
+    <None Include="obj\Release\net7.0\build-gz\3XN7ybGG.gz" />
+    <None Include="obj\Release\net7.0\build-gz\40f2WUOF.gz" />
+    <None Include="obj\Release\net7.0\build-gz\4Mg17wcX.gz" />
+    <None Include="obj\Release\net7.0\build-gz\4vQetb2W.gz" />
+    <None Include="obj\Release\net7.0\build-gz\4wVDLwKp.gz" />
+    <None Include="obj\Release\net7.0\build-gz\68KisU8r.gz" />
+    <None Include="obj\Release\net7.0\build-gz\6FdyZiUg.gz" />
+    <None Include="obj\Release\net7.0\build-gz\73+N6P4x.gz" />
+    <None Include="obj\Release\net7.0\build-gz\7EZ77OqI.gz" />
+    <None Include="obj\Release\net7.0\build-gz\81sLz8+5.gz" />
+    <None Include="obj\Release\net7.0\build-gz\9L3t2l4l.gz" />
+    <None Include="obj\Release\net7.0\build-gz\a6YEqsvf.gz" />
+    <None Include="obj\Release\net7.0\build-gz\aAOCZywx.gz" />
+    <None Include="obj\Release\net7.0\build-gz\aBDkX2v6.gz" />
+    <None Include="obj\Release\net7.0\build-gz\ABT8Ze8c.gz" />
+    <None Include="obj\Release\net7.0\build-gz\aHlRncVL.gz" />
+    <None Include="obj\Release\net7.0\build-gz\aXXDA3Tc.gz" />
+    <None Include="obj\Release\net7.0\build-gz\bE+7QJnn.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Bq3+Ceve.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Bq79u+Wh.gz" />
+    <None Include="obj\Release\net7.0\build-gz\BY0Q+SrT.gz" />
+    <None Include="obj\Release\net7.0\build-gz\C5E8Ep32.gz" />
+    <None Include="obj\Release\net7.0\build-gz\C8fdXbDq.gz" />
+    <None Include="obj\Release\net7.0\build-gz\cGirWr+m.gz" />
+    <None Include="obj\Release\net7.0\build-gz\cgRcgBSw.gz" />
+    <None Include="obj\Release\net7.0\build-gz\cHraMmfa.gz" />
+    <None Include="obj\Release\net7.0\build-gz\ciSwAW9k.gz" />
+    <None Include="obj\Release\net7.0\build-gz\CjjQ1lpi.gz" />
+    <None Include="obj\Release\net7.0\build-gz\cKfXHjVX.gz" />
+    <None Include="obj\Release\net7.0\build-gz\CNKeZ8LC.gz" />
+    <None Include="obj\Release\net7.0\build-gz\CnLgozBm.gz" />
+    <None Include="obj\Release\net7.0\build-gz\CnozIpmM.gz" />
+    <None Include="obj\Release\net7.0\build-gz\csgyo+vI.gz" />
+    <None Include="obj\Release\net7.0\build-gz\CY0lZCZZ.gz" />
+    <None Include="obj\Release\net7.0\build-gz\d01b9Wm1.gz" />
+    <None Include="obj\Release\net7.0\build-gz\D5LoojOD.gz" />
+    <None Include="obj\Release\net7.0\build-gz\dBuexBHd.gz" />
+    <None Include="obj\Release\net7.0\build-gz\dCPd3Dx2.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Df3XOjt4.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Dh+r9Wux.gz" />
+    <None Include="obj\Release\net7.0\build-gz\dj6+Aw2S.gz" />
+    <None Include="obj\Release\net7.0\build-gz\dlCfu1eL.gz" />
+    <None Include="obj\Release\net7.0\build-gz\DoCt5TOM.gz" />
+    <None Include="obj\Release\net7.0\build-gz\doPPsxH6.gz" />
+    <None Include="obj\Release\net7.0\build-gz\DSajldFY.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Dxdz6vl2.gz" />
+    <None Include="obj\Release\net7.0\build-gz\dY+JN337.gz" />
+    <None Include="obj\Release\net7.0\build-gz\E+TGoXrp.gz" />
+    <None Include="obj\Release\net7.0\build-gz\eBzymtnk.gz" />
+    <None Include="obj\Release\net7.0\build-gz\EHvKqIcs.gz" />
+    <None Include="obj\Release\net7.0\build-gz\eKp2DWK4.gz" />
+    <None Include="obj\Release\net7.0\build-gz\ER+A3ZW9.gz" />
+    <None Include="obj\Release\net7.0\build-gz\eVb6Hm8n.gz" />
+    <None Include="obj\Release\net7.0\build-gz\F+xqJ+uq.gz" />
+    <None Include="obj\Release\net7.0\build-gz\F4w5VqGC.gz" />
+    <None Include="obj\Release\net7.0\build-gz\faWg6RKG.gz" />
+    <None Include="obj\Release\net7.0\build-gz\FDdyjioY.gz" />
+    <None Include="obj\Release\net7.0\build-gz\FnbMbyff.gz" />
+    <None Include="obj\Release\net7.0\build-gz\G+MD1EoE.gz" />
+    <None Include="obj\Release\net7.0\build-gz\G3Zx+6y1.gz" />
+    <None Include="obj\Release\net7.0\build-gz\gB4YxiCc.gz" />
+    <None Include="obj\Release\net7.0\build-gz\GdRcjXg+.gz" />
+    <None Include="obj\Release\net7.0\build-gz\gkJkEGuh.gz" />
+    <None Include="obj\Release\net7.0\build-gz\glBEPrA7.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Gp4OXzvO.gz" />
+    <None Include="obj\Release\net7.0\build-gz\grqV27O1.gz" />
+    <None Include="obj\Release\net7.0\build-gz\gwRvJ+ur.gz" />
+    <None Include="obj\Release\net7.0\build-gz\GYajtUc3.gz" />
+    <None Include="obj\Release\net7.0\build-gz\GzJNIbFA.gz" />
+    <None Include="obj\Release\net7.0\build-gz\H+V1SDGa.gz" />
+    <None Include="obj\Release\net7.0\build-gz\hiIYCKUX.gz" />
+    <None Include="obj\Release\net7.0\build-gz\HkxtSg9X.gz" />
+    <None Include="obj\Release\net7.0\build-gz\HotidFei.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Hr9oyPsm.gz" />
+    <None Include="obj\Release\net7.0\build-gz\hXw+IzAI.gz" />
+    <None Include="obj\Release\net7.0\build-gz\I3v+7FNJ.gz" />
+    <None Include="obj\Release\net7.0\build-gz\ibLkH9uT.gz" />
+    <None Include="obj\Release\net7.0\build-gz\IkLC4+tp.gz" />
+    <None Include="obj\Release\net7.0\build-gz\ipdsjGMQ.gz" />
+    <None Include="obj\Release\net7.0\build-gz\iUczQcYz.gz" />
+    <None Include="obj\Release\net7.0\build-gz\j54T+Zao.gz" />
+    <None Include="obj\Release\net7.0\build-gz\j5mSoqsz.gz" />
+    <None Include="obj\Release\net7.0\build-gz\J8HZIxAD.gz" />
+    <None Include="obj\Release\net7.0\build-gz\jphDOLw+.gz" />
+    <None Include="obj\Release\net7.0\build-gz\jPIpPCN4.gz" />
+    <None Include="obj\Release\net7.0\build-gz\JtMBm0PS.gz" />
+    <None Include="obj\Release\net7.0\build-gz\JYvn7W9v.gz" />
+    <None Include="obj\Release\net7.0\build-gz\K7JCvbpo.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Kg5v4FCw.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Khvo8YgT.gz" />
+    <None Include="obj\Release\net7.0\build-gz\kI0I43d7.gz" />
+    <None Include="obj\Release\net7.0\build-gz\kODIjg7J.gz" />
+    <None Include="obj\Release\net7.0\build-gz\KpAwlaAQ.gz" />
+    <None Include="obj\Release\net7.0\build-gz\kYgKs23p.gz" />
+    <None Include="obj\Release\net7.0\build-gz\KZ5odgfy.gz" />
+    <None Include="obj\Release\net7.0\build-gz\l3gAja7w.gz" />
+    <None Include="obj\Release\net7.0\build-gz\l3X3LWd4.gz" />
+    <None Include="obj\Release\net7.0\build-gz\LdsDDhAP.gz" />
+    <None Include="obj\Release\net7.0\build-gz\LwUNVoux.gz" />
+    <None Include="obj\Release\net7.0\build-gz\lY4PfQMJ.gz" />
+    <None Include="obj\Release\net7.0\build-gz\M4dQcwsf.gz" />
+    <None Include="obj\Release\net7.0\build-gz\mapotZr3.gz" />
+    <None Include="obj\Release\net7.0\build-gz\MdC1CWHK.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Mf5HaUuC.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Mgtci4zY.gz" />
+    <None Include="obj\Release\net7.0\build-gz\mn4+a6rG.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Mo38ddKb.gz" />
+    <None Include="obj\Release\net7.0\build-gz\MtOK1cHL.gz" />
+    <None Include="obj\Release\net7.0\build-gz\mxUby1QD.gz" />
+    <None Include="obj\Release\net7.0\build-gz\n8fiwSHf.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Ngb2PEeG.gz" />
+    <None Include="obj\Release\net7.0\build-gz\nhQei+jO.gz" />
+    <None Include="obj\Release\net7.0\build-gz\nmdu+abS.gz" />
+    <None Include="obj\Release\net7.0\build-gz\nPYa0qsB.gz" />
+    <None Include="obj\Release\net7.0\build-gz\nRjbsiIb.gz" />
+    <None Include="obj\Release\net7.0\build-gz\ohihy8Aw.gz" />
+    <None Include="obj\Release\net7.0\build-gz\ojNyNUkQ.gz" />
+    <None Include="obj\Release\net7.0\build-gz\okEfdWAy.gz" />
+    <None Include="obj\Release\net7.0\build-gz\OQGbi+tf.gz" />
+    <None Include="obj\Release\net7.0\build-gz\oQNh+IiM.gz" />
+    <None Include="obj\Release\net7.0\build-gz\P2bQupoM.gz" />
+    <None Include="obj\Release\net7.0\build-gz\p90sq4JP.gz" />
+    <None Include="obj\Release\net7.0\build-gz\PAGhXNPI.gz" />
+    <None Include="obj\Release\net7.0\build-gz\pcMSnxD5.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Ped1sJ8X.gz" />
+    <None Include="obj\Release\net7.0\build-gz\PEspRHNr.gz" />
+    <None Include="obj\Release\net7.0\build-gz\PfxPEtPH.gz" />
+    <None Include="obj\Release\net7.0\build-gz\pJXWIn2L.gz" />
+    <None Include="obj\Release\net7.0\build-gz\pklSPNv0.gz" />
+    <None Include="obj\Release\net7.0\build-gz\PnMGff1k.gz" />
+    <None Include="obj\Release\net7.0\build-gz\PpPp7qpA.gz" />
+    <None Include="obj\Release\net7.0\build-gz\PwoIyAY8.gz" />
+    <None Include="obj\Release\net7.0\build-gz\PxXELHgd.gz" />
+    <None Include="obj\Release\net7.0\build-gz\qEWRVXrm.gz" />
+    <None Include="obj\Release\net7.0\build-gz\QIPgNr5n.gz" />
+    <None Include="obj\Release\net7.0\build-gz\qkaxEPWI.gz" />
+    <None Include="obj\Release\net7.0\build-gz\qkJV8Ddj.gz" />
+    <None Include="obj\Release\net7.0\build-gz\qnrXy3n+.gz" />
+    <None Include="obj\Release\net7.0\build-gz\qPK497Yn.gz" />
+    <None Include="obj\Release\net7.0\build-gz\qVMScWUH.gz" />
+    <None Include="obj\Release\net7.0\build-gz\r99HwTnW.gz" />
+    <None Include="obj\Release\net7.0\build-gz\RB0G1Uf+.gz" />
+    <None Include="obj\Release\net7.0\build-gz\rGpqpBdy.gz" />
+    <None Include="obj\Release\net7.0\build-gz\RMomvVQj.gz" />
+    <None Include="obj\Release\net7.0\build-gz\rrCQ2pmq.gz" />
+    <None Include="obj\Release\net7.0\build-gz\RT95WAIp.gz" />
+    <None Include="obj\Release\net7.0\build-gz\RvAPyxDN.gz" />
+    <None Include="obj\Release\net7.0\build-gz\RZ6TEWV0.gz" />
+    <None Include="obj\Release\net7.0\build-gz\SCbajU1X.gz" />
+    <None Include="obj\Release\net7.0\build-gz\sdD0LXJo.gz" />
+    <None Include="obj\Release\net7.0\build-gz\SeEGy2o8.gz" />
+    <None Include="obj\Release\net7.0\build-gz\SIBObcui.gz" />
+    <None Include="obj\Release\net7.0\build-gz\SNb3kR9q.gz" />
+    <None Include="obj\Release\net7.0\build-gz\sWukFKcm.gz" />
+    <None Include="obj\Release\net7.0\build-gz\T2Pz5NNt.gz" />
+    <None Include="obj\Release\net7.0\build-gz\tDcJFaYv.gz" />
+    <None Include="obj\Release\net7.0\build-gz\TEsT3Kvh.gz" />
+    <None Include="obj\Release\net7.0\build-gz\tT3Xjdvw.gz" />
+    <None Include="obj\Release\net7.0\build-gz\u1xV5eoF.gz" />
+    <None Include="obj\Release\net7.0\build-gz\u2OoAIHt.gz" />
+    <None Include="obj\Release\net7.0\build-gz\uqszuyOp.gz" />
+    <None Include="obj\Release\net7.0\build-gz\ut21JV1H.gz" />
+    <None Include="obj\Release\net7.0\build-gz\uYNuYDGF.gz" />
+    <None Include="obj\Release\net7.0\build-gz\UzrdhbUu.gz" />
+    <None Include="obj\Release\net7.0\build-gz\uZx1czs7.gz" />
+    <None Include="obj\Release\net7.0\build-gz\v07+sJ3w.gz" />
+    <None Include="obj\Release\net7.0\build-gz\V69lb8z0.gz" />
+    <None Include="obj\Release\net7.0\build-gz\vBYcwCLA.gz" />
+    <None Include="obj\Release\net7.0\build-gz\VEY5SSuM.gz" />
+    <None Include="obj\Release\net7.0\build-gz\vfIx7Vle.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Vfv022Ca.gz" />
+    <None Include="obj\Release\net7.0\build-gz\vhpGaB+Q.gz" />
+    <None Include="obj\Release\net7.0\build-gz\vKbB1d2U.gz" />
+    <None Include="obj\Release\net7.0\build-gz\VwNwP8Rs.gz" />
+    <None Include="obj\Release\net7.0\build-gz\vX36sA3Q.gz" />
+    <None Include="obj\Release\net7.0\build-gz\VYsclju6.gz" />
+    <None Include="obj\Release\net7.0\build-gz\w1600vjj.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Wax5q8tH.gz" />
+    <None Include="obj\Release\net7.0\build-gz\wGMExksW.gz" />
+    <None Include="obj\Release\net7.0\build-gz\WM2mzsIX.gz" />
+    <None Include="obj\Release\net7.0\build-gz\wopAr4ym.gz" />
+    <None Include="obj\Release\net7.0\build-gz\wPsd4zxu.gz" />
+    <None Include="obj\Release\net7.0\build-gz\wtW3lN12.gz" />
+    <None Include="obj\Release\net7.0\build-gz\WyRwRg3Y.gz" />
+    <None Include="obj\Release\net7.0\build-gz\wZG+h5Bm.gz" />
+    <None Include="obj\Release\net7.0\build-gz\X627OH+c.gz" />
+    <None Include="obj\Release\net7.0\build-gz\xGMXNsIo.gz" />
+    <None Include="obj\Release\net7.0\build-gz\xqXsv7lI.gz" />
+    <None Include="obj\Release\net7.0\build-gz\Y3kYQDq6.gz" />
+    <None Include="obj\Release\net7.0\build-gz\yLSI0Paf.gz" />
+    <None Include="obj\Release\net7.0\build-gz\YUybcyNW.gz" />
+    <None Include="obj\Release\net7.0\build-gz\zFzsT+kL.gz" />
+    <None Include="obj\Release\net7.0\build-gz\zJG2j4tz.gz" />
+    <None Include="obj\Release\net7.0\refint\Vagtsystem.Client.dll" />
+    <None Include="obj\Release\net7.0\scopedcss\bundle\Vagtsystem.Client.styles.css" />
+    <None Include="obj\Release\net7.0\scopedcss\projectbundle\Vagtsystem.Client.bundle.scp.css" />
+    <None Include="obj\Release\net7.0\scopedcss\Shared\MainLayout.razor.rz.scp.css" />
+    <None Include="obj\Release\net7.0\scopedcss\Shared\NavMenu.razor.rz.scp.css" />
+    <None Include="obj\Release\net7.0\staticwebassets\msbuild.build.Vagtsystem.Client.props" />
+    <None Include="obj\Release\net7.0\staticwebassets\msbuild.buildMultiTargeting.Vagtsystem.Client.props" />
+    <None Include="obj\Release\net7.0\staticwebassets\msbuild.buildTransitive.Vagtsystem.Client.props" />
+    <None Include="obj\Release\net7.0\staticwebassets\msbuild.Vagtsystem.Client.Microsoft.AspNetCore.StaticWebAssets.props" />
+    <None Include="obj\Release\net7.0\blazor.boot.json" />
+    <None Include="obj\Release\net7.0\service-worker-assets.js.build" />
+    <None Include="obj\Release\net7.0\staticwebassets.build.json" />
+    <None Include="obj\Release\net7.0\staticwebassets.development.json" />
+    <None Include="obj\Release\net7.0\staticwebassets.pack.json" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Client.AssemblyInfoInputs.cache" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Client.assets.cache" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Client.csproj.AssemblyReference.cache" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Client.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Client.csproj.FileListAbsolute.txt" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Client.dll" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Client.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Client.MvcApplicationPartsAssemblyInfo.cache" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Client.pdb" />
+    <None Include="obj\project.assets.json" />
+    <None Include="obj\project.nuget.cache" />
+    <None Include="obj\Vagtsystem.Client.csproj.nuget.dgspec.json" />
+    <None Include="obj\Vagtsystem.Client.csproj.nuget.g.props" />
+    <None Include="obj\Vagtsystem.Client.csproj.nuget.g.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="obj\Debug\net7.0\Vagtsystem.Client.GlobalUsings.g.cs" />
+    <Compile Include="obj\Release\net7.0\.NETCoreApp,Version=v7.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Release\net7.0\Vagtsystem.Client.AssemblyInfo.cs" />
+    <Compile Include="obj\Release\net7.0\Vagtsystem.Client.GlobalUsings.g.cs" />
+  </ItemGroup>
+</Project>

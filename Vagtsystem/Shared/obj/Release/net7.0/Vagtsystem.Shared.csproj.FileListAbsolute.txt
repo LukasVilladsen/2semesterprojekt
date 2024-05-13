@@ -1,0 +1,12 @@
+/Users/sunmundur/Documents/IT-arkitekt/Semester 2/Semester2projekt/Vagtsystem/Shared/bin/Release/net7.0/Vagtsystem.Shared.deps.json
+/Users/sunmundur/Documents/IT-arkitekt/Semester 2/Semester2projekt/Vagtsystem/Shared/bin/Release/net7.0/Vagtsystem.Shared.dll
+/Users/sunmundur/Documents/IT-arkitekt/Semester 2/Semester2projekt/Vagtsystem/Shared/bin/Release/net7.0/Vagtsystem.Shared.pdb
+/Users/sunmundur/Documents/IT-arkitekt/Semester 2/Semester2projekt/Vagtsystem/Shared/obj/Release/net7.0/Vagtsystem.Shared.csproj.AssemblyReference.cache
+/Users/sunmundur/Documents/IT-arkitekt/Semester 2/Semester2projekt/Vagtsystem/Shared/obj/Release/net7.0/Vagtsystem.Shared.GeneratedMSBuildEditorConfig.editorconfig
+/Users/sunmundur/Documents/IT-arkitekt/Semester 2/Semester2projekt/Vagtsystem/Shared/obj/Release/net7.0/Vagtsystem.Shared.AssemblyInfoInputs.cache
+/Users/sunmundur/Documents/IT-arkitekt/Semester 2/Semester2projekt/Vagtsystem/Shared/obj/Release/net7.0/Vagtsystem.Shared.AssemblyInfo.cs
+/Users/sunmundur/Documents/IT-arkitekt/Semester 2/Semester2projekt/Vagtsystem/Shared/obj/Release/net7.0/Vagtsystem.Shared.csproj.CoreCompileInputs.cache
+/Users/sunmundur/Documents/IT-arkitekt/Semester 2/Semester2projekt/Vagtsystem/Shared/obj/Release/net7.0/Vagtsystem.Shared.dll
+/Users/sunmundur/Documents/IT-arkitekt/Semester 2/Semester2projekt/Vagtsystem/Shared/obj/Release/net7.0/refint/Vagtsystem.Shared.dll
+/Users/sunmundur/Documents/IT-arkitekt/Semester 2/Semester2projekt/Vagtsystem/Shared/obj/Release/net7.0/Vagtsystem.Shared.pdb
+/Users/sunmundur/Documents/IT-arkitekt/Semester 2/Semester2projekt/Vagtsystem/Shared/obj/Release/net7.0/ref/Vagtsystem.Shared.dll

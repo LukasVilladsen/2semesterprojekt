@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Models\KoordVagt.cds" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Release\net7.0\Vagtsystem.Shared.deps.json" />
+    <None Include="bin\Release\net7.0\Vagtsystem.Shared.dll" />
+    <None Include="bin\Release\net7.0\Vagtsystem.Shared.pdb" />
+    <None Include="obj\Debug\net7.0\Vagtsystem.Shared.csproj.AssemblyReference.cache" />
+    <None Include="obj\Release\net7.0\ref\Vagtsystem.Shared.dll" />
+    <None Include="obj\Release\net7.0\refint\Vagtsystem.Shared.dll" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Shared.AssemblyInfoInputs.cache" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Shared.assets.cache" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Shared.csproj.AssemblyReference.cache" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Shared.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Shared.csproj.FileListAbsolute.txt" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Shared.dll" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Shared.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="obj\Release\net7.0\Vagtsystem.Shared.pdb" />
+    <None Include="obj\project.assets.json" />
+    <None Include="obj\project.nuget.cache" />
+    <None Include="obj\Vagtsystem.Shared.csproj.nuget.dgspec.json" />
+    <None Include="obj\Vagtsystem.Shared.csproj.nuget.g.props" />
+    <None Include="obj\Vagtsystem.Shared.csproj.nuget.g.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="obj\Debug\net7.0\Vagtsystem.Shared.GlobalUsings.g.cs" />
+    <Compile Include="obj\Release\net7.0\.NETCoreApp,Version=v7.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Release\net7.0\Vagtsystem.Shared.AssemblyInfo.cs" />
+    <Compile Include="obj\Release\net7.0\Vagtsystem.Shared.GlobalUsings.g.cs" />
+  </ItemGroup>
+</Project>

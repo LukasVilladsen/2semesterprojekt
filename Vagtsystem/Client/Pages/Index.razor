@@ -1,0 +1,68 @@
+﻿@page "/"
+@using Vagtsystem.Shared.Models
+@inject HttpClient HttpClient
+@inject NavigationManager NavManager;
+
+<PageTitle>Index</PageTitle>
+@*login side*@
+
+<h1>Login</h1>
+
+@*tager imod bruger_id som login og logger ind ved tryk på knap*@
+<input type="int" id="login" @bind-value="@Bruger_id" />
+<button class="btn btn-block btn-success" @onclick="@(async () => await Authenticate())">Log ind</button>
+
+@*Hvis bruger_id ikke existerer viser popup vindue fejl*@
+@if (isFejl)
+    {
+<div class="modal" tabindex="-1" style="display:block" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Fejl</h3>
+                <button type="button" class="close" onclick="@closeModal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Forkert bruger id prøv igen
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-block btn-success" onclick="@closeModal" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+    }
+@code
+{
+    public int Bruger_id { get; set; }
+    public Frivillig frivillig = new();
+    public Boolean isFejl = false;
+
+    //henter bruger info og håndterer fejl ved forkert bruger_id
+    public async Task Authenticate()
+    {
+
+        try
+        {
+            frivillig = await HttpClient.GetFromJsonAsync<Frivillig>($"{Config.ServerUrl}/Festival/Frivillig/{Bruger_id}");
+
+            //videresender bruger til brugersiden
+            NavManager.NavigateTo("/bruger/" + Bruger_id);
+        }
+        catch (Exception ex)
+        {
+            this.isFejl = true;
+        }
+
+    }
+
+    //lukker popup vindue
+    protected void closeModal()
+    {
+        this.isFejl = false;
+    }
+
+
+}

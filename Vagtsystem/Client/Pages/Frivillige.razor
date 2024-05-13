@@ -1,0 +1,271 @@
+﻿@using Vagtsystem.Shared.Models
+@inject HttpClient HttpClient
+@page "/frivillig-list"
+
+<PageTitle>Frivillig-liste</PageTitle>
+
+@*Koordinator side til CRUD på frivillige*@
+<h1>Frivillige</h1>
+<br />
+<div>
+    <div style="float:left">
+        @*Knap til at tilføje ny frivillig*@
+        <button class="btn btn-primary" @onclick="AddFrivillig">Tilføj frivillig</button>
+    </div>
+
+</div>
+<br />
+
+@if (frivillige == null)
+    {
+    <p><em>Loading...</em></p>
+    }
+    else
+    {
+    //tabel for alle frivillige
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Navn</th>
+                <th>Telefon</th>
+                <th>Email</th>
+                <th>Adresse</th>
+                <th>Fødselsdag</th>
+                <th>Hold</th>
+                <th>Stilling</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in frivillige)
+                {
+                <tr>
+                    <td>@item.Navn</td>
+                    <td>@item.Telefon</td>
+                    <td>@item.Email</td>
+                    <td>@item.Adresse</td>
+                    <td>@DateOnly.FromDateTime(@item.Fødselsdag)</td>
+                    <td>@item.Holdnavn</td>
+                    <td>@item.Stillingnavn</td>
+                    <td>
+                        <button class="btn btn-info" @onclick="(async () => await EditFrivillig(item.Frivillig_id))">Edit</button>
+                        <button class="btn btn-danger" @onclick="(async () => await DeleteConfirm(item.Frivillig_id))">Delete</button>
+                    </td>
+                </tr>
+                }
+        </tbody>
+    </table>
+
+    //popup til ændring/opretning af frivillig
+        if (isAdd)
+        {
+    <div class="modal" tabindex="-1" style="display:block" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@modalTitle</h3>
+                    <button type="button" class="close" onclick="@closeModal">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="Fornavn" class="control-label">Fornavn</label>
+                            <input for="Fornavn" class="form-control" @bind-value="frivillig.Fornavn" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Efternavn" class="control-label">Efternavn</label>
+                            <input for="Efternavn" class="form-control" @bind-value="frivillig.Efternavn" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Email" class="control-label">E-Mail</label>
+                            <input for="Email" class="form-control" @bind-value="frivillig.Email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Telefon" class="control-label">Telefon</label>
+                            <input for="Telefon" class="form-control" @bind-value="frivillig.Telefon" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Adresse" class="control-label">Adresse</label>
+                            <input for="Adresse" class="form-control" @bind-value="frivillig.Adresse" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Fødselsdag" class="control-label">Fødselsdag</label>
+                            <InputDate @bind-Value="frivillig.Fødselsdag" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Hold_id" class="control-label">Hold</label>
+                            <InputSelect @bind-Value="frivillig.Hold_id">
+                                @*opretter en select option for hvert hold*@
+                                @foreach (var v in hold)
+                                {
+                                    <option value="@v.Hold_id">@v.Holdnavn</option>
+                                }
+
+                            </InputSelect>
+                        </div>
+                        <div class="form-group">
+                            <label for="Stilling_id" class="control-label">Stilling</label>
+                            <InputSelect @bind-Value="frivillig.Stilling_id">
+                                @*opretter en select option for hver stilling*@
+                                @foreach (var s in stilling)
+                                {
+                                    <option value="@s.Stilling_id">@s.Stillingnavn</option>
+                                }
+
+                            </InputSelect>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-block btn-success" onclick="@(async () => await SaveFrivillig())" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        }
+
+        //popup til sletning af frivillig
+        if (isDelete)
+        {
+    <div class="modal" tabindex="-1" style="display:block" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Delete Booking</h3>
+                </div>
+                <div class="modal-body">
+                    <h4>Do you want to delete this booking ??</h4>
+                    <table class="table">
+                        <tr>
+                            <td>Name</td>
+                            <td>@frivillig.Fornavn @frivillig.Efternavn</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>@frivillig.Email</td>
+                        </tr>
+                        <tr>
+                            <td>Phone</td>
+                            <td>@frivillig.Telefon</td>
+                        </tr>
+                        <tr>
+                            <td>Check-in</td>
+                            <td>@frivillig.Adresse</td>
+                        </tr>
+                        <tr>
+                            <td>Check-out</td>
+                            <td>@frivillig.Fødselsdag</td>
+                        </tr>
+                        <tr>
+                            <td>People</td>
+                            <td>@frivillig.Hold_id</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" onclick="@(async () => await DeleteBooking(frivillig.Frivillig_id))" data-dismiss="modal">YES</button>
+                    <button class="btn btn-warning" onclick="@closeModal">NO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        }
+    }
+
+
+
+@code {
+
+    protected List<Frivillig> frivillige = new();
+    protected List<Hold> hold = new();
+    protected List<Stilling> stilling = new();
+    protected Frivillig frivillig = new();
+    protected string modalTitle { get; set; }
+    protected Boolean isDelete = false;
+    protected Boolean isAdd = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetFrivillige();
+        await GetHold();
+        await GetStilling();
+    }
+
+    //henter liste af hold
+    protected async Task GetHold()
+    {
+        hold = await HttpClient.GetFromJsonAsync<List<Hold>>($"{Config.ServerUrl}/Festival/Hold");
+    }
+
+    //henter liste af stillinger
+    protected async Task GetStilling()
+    {
+        stilling = await HttpClient.GetFromJsonAsync<List<Stilling>>($"{Config.ServerUrl}/Festival/Stilling");
+    }
+
+    //henter liste af frivillige + 
+    protected async Task GetFrivillige()
+    {
+
+        frivillige = await HttpClient.GetFromJsonAsync<List<Frivillig>>($"{Config.ServerUrl}/Festival/Frivillig/View");
+
+    }
+
+    //funktion til at åbne popup for at tilføje ny frivillig
+    protected void AddFrivillig()
+    {
+        frivillig = new();
+        this.modalTitle = "Add Frivillig";
+        this.isAdd = true;
+    }
+
+    //funktion til at åbne popup for at redigere frivillig info
+    protected async Task EditFrivillig(int ID)
+    {
+        frivillig = await HttpClient.GetFromJsonAsync<Frivillig>($"{Config.ServerUrl}/Festival/Frivillig/{ID}");
+
+        this.modalTitle = "Edit Frivillig";
+        this.isAdd = true;
+    }
+
+    //gemmer ny frivillig eller opdateret frivillig i databasen
+    protected async Task SaveFrivillig()
+    {
+        //hvis frivillig har frivillig_id bliver den opdateret
+        if (frivillig.Frivillig_id != 0)
+        {
+            await HttpClient.PutAsJsonAsync($"{Config.ServerUrl}/Festival/Frivillig", frivillig);
+        }
+        else
+        {
+            await HttpClient.PostAsJsonAsync($"{Config.ServerUrl}/Festival/Frivillig", frivillig);
+
+        }
+        this.isAdd = false;
+        await GetFrivillige();
+    }
+
+    //åbner popup vindue for godkendning af sletning af frivillig
+    protected async Task DeleteConfirm(int ID)
+    {
+        frivillig = await HttpClient.GetFromJsonAsync<Frivillig>($"{Config.ServerUrl}/Festival/Frivillig/{ID}");
+        this.isDelete = true;
+    }
+
+    //sletter frivillig fra databasen og opdaterer liste
+    protected async Task DeleteBooking(int ID)
+    {
+        await HttpClient.DeleteAsync($"{Config.ServerUrl}/Festival/Frivillig/{ID}");
+
+        this.isDelete = false;
+        await GetFrivillige();
+    }
+
+    //lukker popup
+    protected void closeModal()
+    {
+        this.isAdd = false;
+        this.isDelete = false;
+    }
+}

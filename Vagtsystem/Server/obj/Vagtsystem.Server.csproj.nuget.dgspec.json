@@ -1,0 +1,241 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Server/Vagtsystem.Server.csproj": {}
+  },
+  "projects": {
+    "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Client/Vagtsystem.Client.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Client/Vagtsystem.Client.csproj",
+        "projectName": "Vagtsystem.Client",
+        "projectPath": "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Client/Vagtsystem.Client.csproj",
+        "packagesPath": "/Users/lukasvilladsen/.nuget/packages/",
+        "outputPath": "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Client/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/lukasvilladsen/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Shared/Vagtsystem.Shared.csproj": {
+                "projectPath": "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Shared/Vagtsystem.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.123, )"
+            },
+            "Microsoft.AspNetCore.Components.WebAssembly": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.AspNetCore.Components.WebAssembly.DevServer": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[7.0.4, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[7.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
+              "version": "[7.0.5, 7.0.5]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "browser-wasm": {
+          "#import": []
+        }
+      }
+    },
+    "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Server/Vagtsystem.Server.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Server/Vagtsystem.Server.csproj",
+        "projectName": "Vagtsystem.Server",
+        "projectPath": "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Server/Vagtsystem.Server.csproj",
+        "packagesPath": "/Users/lukasvilladsen/.nuget/packages/",
+        "outputPath": "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Server/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/lukasvilladsen/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Client/Vagtsystem.Client.csproj": {
+                "projectPath": "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Client/Vagtsystem.Client.csproj"
+              },
+              "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Shared/Vagtsystem.Shared.csproj": {
+                "projectPath": "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Shared/Vagtsystem.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.123, )"
+            },
+            "Microsoft.AspNetCore.Components.WebAssembly.Server": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[7.0.4, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[7.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Shared/Vagtsystem.Shared.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Shared/Vagtsystem.Shared.csproj",
+        "projectName": "Vagtsystem.Shared",
+        "projectPath": "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Shared/Vagtsystem.Shared.csproj",
+        "packagesPath": "/Users/lukasvilladsen/.nuget/packages/",
+        "outputPath": "/Users/lukasvilladsen/Documents/GitHub/Semester2projekt/Vagtsystem/Shared/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/lukasvilladsen/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

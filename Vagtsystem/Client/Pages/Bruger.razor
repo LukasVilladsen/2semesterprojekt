@@ -1,0 +1,163 @@
+﻿@using Vagtsystem.Shared.Models
+@inject HttpClient HttpClient
+@inject NavigationManager NavManager;
+@page "/bruger"
+@page "/bruger/{Bruger_id}"
+
+<PageTitle>Brugerside</PageTitle>
+@*bruger side for ændring af brugerinfo*@
+
+<h1>Velkommen til din brugerside @frivillig.Navn</h1>
+
+@*Viser bruger-info*@
+<button class="btn btn-info" @onclick="(async () => await EditFrivillig(frivillig.Frivillig_id))">Edit</button>
+<div>Navn: @frivillig.Navn</div>
+<div>Email: @frivillig.Email</div>
+<div>Fødselsdag: @frivillig.Fødselsdag.ToString("dd-MM-yyyy")</div>
+<div>Adresse: @frivillig.Adresse</div>
+<div>Telefon: @frivillig.Telefon</div>
+<div>Hold: @frivillig.Holdnavn</div>
+<div>Stilling: @frivillig.Stillingnavn</div>
+
+@*Knap for at se brugerens vagter*@
+<button class="btn btn-info" @onclick="(() => Handler(1))">Mine Vagter</button>
+
+@*Kører kun hvis brugeren er koordinator*@
+@if (isKoord)
+{
+    <button class="btn btn-info" @onclick="(() => Handler(2))">Vagter for alle frivillige</button>
+    <button class="btn btn-info" @onclick="(() => Handler(3))">Info for alle frivillige</button>
+}
+
+@*Pop op vindue*@
+@if (isAdd)
+{
+    <div class="modal" tabindex="-1" style="display:block" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@modalTitle</h3>
+                    <button type="button" class="close" onclick="@closeModal">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        @*Redigering af bruger info*@
+                        <div class="form-group">
+                            <label for="Fornavn" class="control-label">Fornavn</label>
+                            <input for="Fornavn" class="form-control" @bind-value="frivillig.Fornavn" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Efternavn" class="control-label">Efternavn</label>
+                            <input for="Efternavn" class="form-control" @bind-value="frivillig.Efternavn" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Email" class="control-label">E-Mail</label>
+                            <input for="Email" class="form-control" @bind-value="frivillig.Email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Telefon" class="control-label">Telefon</label>
+                            <input for="Telefon" class="form-control" @bind-value="frivillig.Telefon" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Adresse" class="control-label">Adresse</label>
+                            <input for="Adresse" class="form-control" @bind-value="frivillig.Adresse" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Fødselsdag" class="control-label">Fødselsdag</label>
+                            <InputDate @bind-Value="frivillig.Fødselsdag" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-block btn-success" onclick="@(async () => await SaveFrivillig())" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@code
+{
+    [Parameter]
+    public string Bruger_id { get; set; }
+
+    protected Frivillig frivillig = new();
+    protected List<Hold> hold = new();
+    protected string modalTitle { get; set; }
+    protected Boolean isDelete = false;
+    protected Boolean isAdd = false;
+    protected Boolean isKoord = false;
+    public string url = "/bruger";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetFrivillig(Int32.Parse(Bruger_id));
+        Koordinator();
+    }
+
+    //find bruger ved brug af id
+    protected async Task GetFrivillig(int frivillig_id)
+    {
+
+        frivillig = await HttpClient.GetFromJsonAsync<Frivillig>($"{Config.ServerUrl}/Festival/Frivillig/View/{frivillig_id}");
+
+    }
+
+    //opdater bruger info
+    protected async Task EditFrivillig(int ID)
+    {
+        
+
+        this.modalTitle = "Edit Frivillig";
+        this.isAdd = true;
+    }
+
+    //funktion til visning af knapper til koordinatorfunktioner
+    protected void Koordinator()
+    {
+        if (frivillig.Stilling_id == 2 || frivillig.Stilling_id == 3)
+        {
+            isKoord = true;
+        }
+    }
+
+    //gemmer opdatering og opretning af bruger i databasen
+    protected async Task SaveFrivillig()
+    {
+        if (frivillig.Frivillig_id != 0)
+        {
+            await HttpClient.PutAsJsonAsync($"{Config.ServerUrl}/Festival/Frivillig", frivillig);
+        }
+        else
+        {
+            await HttpClient.PostAsJsonAsync($"{Config.ServerUrl}/Festival/Frivillig", frivillig);
+
+        }
+        this.isAdd = false;
+    }
+
+    //funktion til lukning af popup vindue
+    protected void closeModal()
+    {
+        this.isAdd = false;
+        this.isDelete = false;
+    }
+
+    //funktion til videresending til sider ved knaptryk
+    public async Task Handler(int id)
+    {
+        switch (id)
+        {
+            case 1:
+                NavManager.NavigateTo(url + "/" + Bruger_id + "/vagter");
+                break;
+            case 2:
+                NavManager.NavigateTo("/vagter");
+                break;
+            case 3:
+                NavManager.NavigateTo("/frivillig-list");
+                break;
+        }
+    }
+}

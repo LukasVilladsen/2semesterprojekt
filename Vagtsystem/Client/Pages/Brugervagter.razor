@@ -1,0 +1,234 @@
+﻿@using Vagtsystem.Shared.Models
+@inject HttpClient HttpClient
+@page "/bruger/{Bruger_id}/vagter"
+
+<PageTitle>Brugerside</PageTitle>
+@*brugerside til vagter*@
+
+<h1>Vælg dine vagter @frivillig.Fornavn</h1>
+
+@*Tabs til at skifte mellem visning af vagter*@
+<button class="btn btn-info" @onclick="() => ButtonClick(1)" data-dismiss="modal">Alle Vagter</button>
+<button class="btn btn-info" @onclick="() => ButtonClick(2)" data-dismiss="modal">Mine Vagter</button>
+
+@if (vagter.Count == 0)
+{
+    <p><em>Loading...</em></p>
+}
+else if (tab == 1)
+{
+     //tabel for vagter
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Vagt_id</th>
+                <th>Start</th>
+                <th>Slut</th>
+                <th>Hold</th>
+                <th>Prioritet</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in vagter)
+                {
+                <tr>
+                    <td>@item.Vagt_id</td>
+                    <td>@((item.Start).ToString("dddd, dd MMMM yyyy HH:mm"))</td>
+                    <td>@((item.Slut).ToString("dddd, dd MMMM yyyy HH:mm"))</td>
+                    <td>@item.Holdnavn</td>
+                    <td>@item.Prioritet</td>
+                    <td><button class="btn btn-info" @onclick="@(async () => await PickVagt(item.Vagt_id))">Vælg</button></td>
+                </tr>
+                }
+        </tbody>
+    </table>
+
+    //popup for at tage vagt
+    if (isAdd)
+        {
+        <div class="modal" tabindex="-1" style="display:block" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">@modalTitle</h3>
+                        <button type="button" class="close" onclick="@closeModal">
+                            <span aria-hidden="true">X</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>Vil du tage følgende vagt?</div>
+                        <div>@((@vagt.Start).ToString("dddd, dd MMMM yyyy HH:mm"))</div>
+                        <div>@((@vagt.Slut).ToString("dddd, dd MMMM yyyy HH:mm"))</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-block btn-success" onclick="@(async () => await SaveVagt())" data-dismiss="modal">Godkend</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+}
+
+//"Mine vagter" vises ved tryk på knap
+else if (tab == 2)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Vagt_id</th>
+                <th>Start</th>
+                <th>Slut</th>
+                <th>Holdnavn</th>
+                <th>Prioritet</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in brugerVagter)
+                {
+                <tr>
+                    <td>@item.Vagt_id</td>
+                    <td>@((item.Start).ToString("dddd, dd MMMM yyyy HH:mm"))</td>
+                    <td>@((item.Slut).ToString("dddd, dd MMMM yyyy HH:mm"))</td>
+                    <td>@item.Holdnavn</td>
+                    <td>@item.Prioritet</td>
+                    <td><button class="btn btn-danger" @onclick="@(async () => await DeleteConfirm(item.Frivillig_vagt_id))">Slet</button></td>
+                </tr>
+                }
+        </tbody>
+    </table>
+    //popup til afmelding af vagter
+    if (isDelete)
+        {
+            {
+            <div class="modal" tabindex="-1" style="display:block" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Slet vagt</h3>
+                        </div>
+                        <div class="modal-body">
+                            <h4>Vil du afmelde denne vagt?</h4>
+                            <div class="modal-body">
+                                <div>@vagt.Start.ToString("dddd, dd MMMM yyyy HH:mm")</div>
+                                <div>@vagt.Slut.ToString("dddd, dd MMMM yyyy HH:mm")</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger" @onclick="@(async () => await DeleteVagt(vagt.Frivillig_vagt_id))" data-dismiss="modal">Ja</button>
+                            <button class="btn btn-warning" @onclick="closeModal">Nej</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            }
+        }
+}
+
+
+
+@code
+{
+    [Parameter]
+    public string Bruger_id { get; set; }
+
+    protected List<Vagt> vagter = new();
+    protected Frivillig frivillig = new();
+    protected Vagt frivilligVagt = new();
+    protected Vagt vagt = new();
+    protected List<Vagt> brugerVagter = new();
+    protected string modalTitle { get; set; }
+    protected Boolean isDelete = false;
+    protected Boolean isAdd = false;
+    protected int tab = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetFrivillig(Int32.Parse(Bruger_id));
+        await GetVagter(frivillig.Frivillig_id);
+        await GetBrugerVagter(frivillig.Frivillig_id);
+    }
+
+    //funktion til lukning af popup
+    protected void closeModal()
+    {
+        this.isAdd = false;
+        this.isDelete = false;
+    }
+
+    //henter frivillig ved brug af id
+    protected async Task GetFrivillig(int frivillig_id)
+    {
+        frivillig = await HttpClient.GetFromJsonAsync<Frivillig>($"{Config.ServerUrl}/Festival/Frivillig/{frivillig_id}");
+    }
+
+    //henter liste over alle vagter brugeren kan tage
+    protected async Task GetVagter(int frivillig_id)
+    {
+        vagter = await HttpClient.GetFromJsonAsync<List<Vagt>>($"{Config.ServerUrl}/Festival/Vagt/Bruger/Vagter/{frivillig_id}");
+    }
+
+    //henter liste over vagter som brugeren er på
+    protected async Task GetBrugerVagter(int id)
+    {
+        brugerVagter = await HttpClient.GetFromJsonAsync<List<Vagt>>($"{Config.ServerUrl}/Festival/Vagt/Bruger/{id}");
+    }
+
+    //henter vagt info og åbner popup ved knaptryk
+    protected async Task PickVagt(int ID)
+    {
+        vagt = await HttpClient.GetFromJsonAsync<Vagt>($"{Config.ServerUrl}/Festival/Vagt/{ID}");
+        this.modalTitle = "Vælg vagt";
+        this.isAdd = true;
+    }
+
+    //kører funktioner for opdatering af de to lister
+    protected async Task UpdateLists()
+    {
+        await GetVagter(frivillig.Frivillig_id);
+        await GetBrugerVagter(frivillig.Frivillig_id);
+    }
+
+    //gemmer valgte vagt i databasen
+    protected async Task SaveVagt()
+    {
+        frivilligVagt = new Vagt { Frivillig_id = frivillig.Frivillig_id, Vagt_id = vagt.Vagt_id };
+        await HttpClient.PostAsJsonAsync($"{Config.ServerUrl}/Festival/Vagt", frivilligVagt);
+        this.isAdd = false;
+        await UpdateLists();
+    }
+
+    //åbner popup vindue for godkendelse af afmelding fra vagt
+    protected async Task DeleteConfirm(int id)
+    {
+        vagt = await HttpClient.GetFromJsonAsync<Vagt>($"{Config.ServerUrl}/Festival/Vagt/Vagter/{id}");
+        this.isDelete = true;
+    }
+
+    //sletter brugeren fra vagt i databasen og opdaterer listen
+    protected async Task DeleteVagt(int id)
+    {
+        await HttpClient.DeleteAsync($"{Config.ServerUrl}/Festival/Vagt/{id}");
+        this.isDelete = false;
+        await UpdateLists();
+    }
+
+    //funktion til at skifte mellem tabs
+    protected async Task ButtonClick(int id)
+    {
+        switch (id)
+        {
+            case 1:
+
+                tab = 1;
+                break;
+            case 2:
+                tab = 2;
+                break;
+            default:
+                // code block
+                break;
+        }
+    }
+
+    }

@@ -1,0 +1,369 @@
+﻿@page "/vagter"
+@using Vagtsystem.Shared.Models
+@inject HttpClient HttpClient
+
+<PageTitle>Vagter</PageTitle>
+@*Koordinatorside for CRUD på vagter*@
+<h1>Vagter</h1>
+<div>
+    <div style="float:left">
+        @*knap for at tilføje nye vagter - hold bliver valgt af dropdown*@
+        <button class="btn btn-primary" @onclick="AddVagt">Tilføj Vagt</button>
+    </div>
+
+</div>
+@*dropdown til valg af hold - er forbundet med opretning af vagter*@
+<InputSelect @bind-Value="SelectedId" @oninput="@(async e => await ValueChanged(e))">
+    <option value="0">Vælg hold</option>
+    @foreach (var h in hold)
+    {
+        <option value=@h.Hold_id selected=@(SelectedId == h.Hold_id)>@h.Holdnavn</option>
+    }
+</InputSelect>
+
+@if (vagtskema.Count == 0)
+{
+    <p><em>...</em></p>
+}
+else
+{
+        //tabel med vagt info og knapper for sortering
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Vagt_id</th>
+                <th>Start<button style="background-color:@startcolor" @onclick="@(async () => await Sort(5))">@((MarkupString)arrow)</button></th>
+                <th>Slut<button style="background-color:@slutcolor" @onclick="@(async () => await Sort(7))">@((MarkupString)arrow)</button></th>
+                <th>Prioritet<button style="background-color:@prioritetcolor" @onclick="@(async () => await Sort(3))">@((MarkupString)arrow)</button></th>
+                <th>Antal<button style="background-color:@antalcolor" @onclick="@(async () => await Sort(1))">@((MarkupString)arrow)</button></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in vagtskema)
+            {
+                <tr>
+                    <td>@item.Vagt_id</td>
+                    <td>@((item.Start).ToString("dddd, dd MMMM yyyy HH:mm"))</td>
+                    <td>@((item.Slut).ToString("dddd, dd MMMM yyyy HH:mm"))</td>
+                    <td>@item.Prioritet</td>
+                    <td>@item.Antal</td>
+                    <td><button class="btn btn-info" @onclick="@(async () => await EditVagt(item.Vagt_id))">Edit</button></td>
+                    <td><button class="btn btn-danger" @onclick="(() => DeleteConfirm(item.Vagt_id))">Remove</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    //popup vindue til redigering og tilføjelse af vagter
+    if (isAdd)
+    {
+        <div class="modal" tabindex="-1" style="display:block" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">@modalTitle</h3>
+                        <button type="button" class="close" onclick="@closeModal">
+                            <span aria-hidden="true">X</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <div>Hold: @hold.Find(x => x.Hold_id == SelectedId).Holdnavn</div>
+                                <label for="Start" class="control-label">Start</label>
+                                <input type="datetime" @bind="vagt.Start" @bind:format="dd-MM-yyyy HH:mm" />
+                                <label for="Slut" class="control-label">Slut</label>
+                                <input type="datetime" @bind="vagt.Slut" @bind:format="dd-MM-yyyy HH:mm" />
+                                <label for="Prioritet" class="control-label">Prioritet</label>
+                                <InputSelect @bind-Value="vagt.Prioritet">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </InputSelect>
+                            </div>
+                        </form>
+                        <div>Frivillige på denne vagt:</div>
+                        @if (vagtList != null)
+                        {
+                                //liste af frivillige på den valgte vagt
+                            @foreach (var item in vagtList) if (item.Frivillig_vagt_id != 0)
+                            {  
+                            <tr>
+                                <td>@item.Navn </td>
+                                <td><button class="btn btn-danger" @onclick="(() => DeleteConfirmFrivillig(item.Frivillig_vagt_id))">Remove</button></td>
+                            </tr>
+                            }
+                        }
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-block btn-success" onclick="@(async () => await SaveVagt())" data-dismiss="modal">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    //popup til sletning af vagt
+    if (isDelete)
+    {
+        <div class="modal" tabindex="-1" style="display:block" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Slet vagt</h3>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Vil du slette denne vagt?</h4>
+                        <table class="table">
+                            <tr>
+                                <td>Vagt_id</td>
+                                <td>@vagt.Vagt_id</td>
+                            </tr>
+                            <tr>
+                                <td>Start</td>
+                                <td>@vagt.Start</td>
+                            </tr>
+                            <tr>
+                                <td>Slut</td>
+                                <td>@vagt.Slut</td>
+                            </tr>
+                            <tr>
+                                <td>Prioritet</td>
+                                <td>@vagt.Prioritet</td>
+                            </tr>
+                            <tr>
+                                <td>Hold</td>
+                                <td>@vagt.Holdnavn</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" onclick="@(async () => await DeleteVagt(vagt.Vagt_id))" data-dismiss="modal">YES</button>
+                        <button class="btn btn-warning" onclick="@closeModal">NO</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    //popup til sletning af frivillig fra vagt
+    if (isUserDelete)
+    {
+        <div class="modal" tabindex="-1" style="display:block" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Fjern frivillig</h3>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Vil du fjerne @Brugervagt.Navn fra denne vagt?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" onclick="@(async () => await DeleteFrivilligVagt(Brugervagt.Frivillig_vagt_id))" data-dismiss="modal">YES</button>
+                        <button class="btn btn-warning" onclick="@closeModal">NO</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+@code {
+    protected List<Vagt> vagtskema = new();
+    protected List<Hold> hold = new();
+    protected List<Vagt> vagtList = new();
+    protected Vagt Brugervagt = new();
+    protected Vagt vagt = new();
+    protected int desc = 0;
+    protected string arrow = "&uarr;";
+    public int SelectedId { get; set; }
+    protected string modalTitle { get; set; }
+    protected Boolean isAdd = false;
+    protected Boolean isDelete = false;
+    protected Boolean isUserDelete = false;
+    protected string On = "#0DCAF0";
+    protected string Off = "#FFFFFF";
+    protected string startcolor;
+    protected string slutcolor;
+    protected string prioritetcolor;
+    protected string antalcolor;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetHold();
+        SetColors();
+    }
+
+    //nulstiller farver for sorteringsknapper
+    protected void SetColors()
+    {
+        startcolor = Off;
+        slutcolor = Off;
+        prioritetcolor = Off;
+        antalcolor = Off;
+    }
+
+    //henter list af vagter
+    protected async Task GetVagter(int id, int sort)
+    {
+        vagtskema = await HttpClient.GetFromJsonAsync<List<Vagt>>($"{Config.ServerUrl}/Festival/Vagt/Koord/{id}/{sort}");
+    }
+
+    //henter vagt ved brug af id
+    protected async Task GetVagt(int id)
+    {
+        vagt = await HttpClient.GetFromJsonAsync<Vagt>($"{Config.ServerUrl}/Festival/Vagt/{id}");
+    }
+
+    //henter holdliste
+    protected async Task GetHold()
+    {
+        hold = await HttpClient.GetFromJsonAsync<List<Hold>>($"{Config.ServerUrl}/Festival/Hold");
+    }
+
+    //viser det relevante hold ved ændring af dropdown værdi
+    private async Task ValueChanged(ChangeEventArgs args)
+    {
+        Console.WriteLine(args.Value);
+        SelectedId = Int32.Parse(args.Value.ToString());
+        await GetVagter(SelectedId, 0);
+    }
+
+    //funktion der kalder funktioner relevante til sortering
+    protected async Task Sort(int sort)
+    {
+        await GetVagter(SelectedId, (sort + desc));
+        Switch();
+        Color(sort);
+
+    }
+
+    //skifter farve på den valgte sortering knap
+    protected void Color(int id)
+    {
+        switch (id)
+        {
+            case 1:
+                antalcolor = On;
+                startcolor = Off;
+                slutcolor = Off;
+                prioritetcolor = Off;
+                break;
+            case 3:
+                antalcolor = Off;
+                startcolor = Off;
+                slutcolor = Off;
+                prioritetcolor = On;
+                break;
+            case 5:
+                antalcolor = Off;
+                startcolor = On;
+                slutcolor = Off;
+                prioritetcolor = Off;
+                break;
+            case 7:
+                antalcolor = Off;
+                startcolor = Off;
+                slutcolor = On;
+                prioritetcolor = Off;
+                break;
+            default:
+                break;
+        }
+    }
+
+    //pil symbol på knap ændrer retning i forhold til sorteringsretning
+    protected void Switch()
+    {
+        if (desc == 1)
+        {
+            desc = 0;
+            arrow = "&darr;";
+        }
+        else
+        {
+            desc = 1;
+            arrow = "&uarr;";
+        }
+    }
+
+    //lukker popup
+    protected void closeModal()
+    {
+        this.isAdd = false;
+        this.isDelete = false;
+    }
+
+
+    //henter brugere på den relevante vagt 
+    protected async Task GetFrivilligVagt(int id)
+    {
+        vagtList = await HttpClient.GetFromJsonAsync<List<Vagt>>($"{Config.ServerUrl}/Festival/Frivillig/Vagt/{id}");
+    }
+
+    //åbner popup til redigering af vagt
+    protected async Task EditVagt(int ID)
+    {
+        await GetVagt(ID);
+        await GetFrivilligVagt(ID);
+        this.modalTitle = "Edit Vagt";
+        this.isAdd = true;
+    }
+
+    //gemmer den redigerede / opretter den nye vagt i databasen
+    protected async Task SaveVagt()
+    {
+        if (vagt.Vagt_id != 0)
+        {
+            await HttpClient.PutAsJsonAsync($"{Config.ServerUrl}/Festival/Vagt/Holdvagt", vagt);
+        }
+        else
+        {
+            await HttpClient.PostAsJsonAsync($"{Config.ServerUrl}/Festival/Vagt/Holdvagt", vagt);
+
+        }
+        this.isAdd = false;
+        await GetVagter(SelectedId, 0);
+    }
+
+    //åbner popup for godkendelse af sletning af vagt
+    protected async Task DeleteConfirm(int id)
+    {
+        vagt = await HttpClient.GetFromJsonAsync<Vagt>($"{Config.ServerUrl}/Festival/Vagt/{id}");
+        this.isDelete = true;
+    }
+
+    //sletter vagt fra databasen
+    protected async Task DeleteVagt(int id)
+    {
+        await HttpClient.DeleteAsync($"{Config.ServerUrl}/Festival/Vagt/Hold/{id}");
+        this.isDelete = false;
+        await GetVagter(SelectedId, 0);
+    }
+
+    //åbner popup for godkendelse af sletning af frivillig fra vagt
+    protected async Task DeleteConfirmFrivillig(int id)
+    {
+        Brugervagt = await HttpClient.GetFromJsonAsync<Vagt>($"{Config.ServerUrl}/Festival/Vagt/Vagter/{id}");
+        this.isUserDelete = true;
+    }
+
+    //sletter den frivillige fra vagten i databasen
+    protected async Task DeleteFrivilligVagt(int id)
+    {
+        await HttpClient.DeleteAsync($"{Config.ServerUrl}/Festival/Vagt/{id}");
+        this.isUserDelete = false;
+        await GetFrivilligVagt(vagt.Vagt_id);
+    }
+
+    //åbner popup for tilføjning af ny vagt
+    protected void AddVagt()
+    {
+        vagt = new Vagt { Hold_id = SelectedId };
+        this.modalTitle = "Opret ny vagt";
+        this.isAdd = true;
+    }
+
+    }
